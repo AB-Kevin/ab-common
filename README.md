@@ -9,6 +9,7 @@ The parts every Anabaptist Brotherhood app needs, kept in one place instead of c
 | `ab-common/releases` | Reading an app's latest release from its `latest.yml` and downloading the installer checked against its digest. `selfUpdates({ repo, installerName })` gives an app its own update check. |
 | `ab-common/installs` | Finding an installed app from its `appId`, as electron-builder registers it, and opening it. |
 | `ab-common/mailer` | Sending email over SMTP, without signing in when there's no user name, as AB Apps' mail server needs. |
+| `ab-common/appfolder` | Each app's data in its own subfolder of the AB Apps folder: which folder to use (`chooseFolder`), and moving data there once (`moveToAbApps`), leaving a note that sends other computers along. |
 | `ab-common/gravityforms` | Reading forms and entries from the website's Gravity Forms API with a read-only key. |
 | `templates/release.yml` | The release workflow: copy it to an app's `.github/workflows/` and set its three values. |
 
@@ -47,7 +48,8 @@ A tag is never moved once pushed: an app's package-lock.json records the commit 
 | App | Uses |
 | --- | --- |
 | AB Apps | jsonfile, releases, installs, mailer, gravityforms |
-| KeepTime | jsonfile, abapps, releases, installs, mailer |
-| Duplicate Checker | jsonfile, abapps, releases |
+| KeepTime | jsonfile, abapps, releases, installs, mailer, appfolder |
+| Duplicate Checker | jsonfile, abapps, releases, appfolder |
+| FormTracker, SendNewsletters, ApplicationManager | appfolder |
 
-BillManager, ApplicationManager, FormTracker and SendNewsletters still have their own copies. They update through electron-updater rather than `releases`, so they move over separately.
+BillManager, ApplicationManager, FormTracker and SendNewsletters otherwise still have their own copies. They update through electron-updater rather than `releases`, so they move over separately.

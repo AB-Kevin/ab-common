@@ -18,7 +18,8 @@
     "./installs": "./src/installs.js",
     "./releases": "./src/releases.js",
     "./mailer": "./src/mailer.js",
-    "./gravityforms": "./src/gravityforms.js"
+    "./gravityforms": "./src/gravityforms.js",
+    "./appfolder": "./src/appfolder.js"
   },
   "scripts": {
     "test": "node --test --test-force-exit \"test/*.test.js\"",
