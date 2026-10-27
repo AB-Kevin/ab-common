@@ -1,6 +1,6 @@
 {
   "name": "ab-common",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "The parts every Anabaptist Brotherhood app needs: OneDrive-safe JSON files, the AB Apps sign-in and shared settings, self-updates from GitHub releases, email and the Gravity Forms API.",
   "author": "Anabaptist Brotherhood",
   "license": "UNLICENSED",
