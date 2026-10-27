@@ -123,22 +123,22 @@ test('a download that doesn\'t match the release is thrown away', async () => {
 });
 
 // An app updating itself: only its own installer, by the name it's built with.
-const keeptime = selfUpdates({ repo: 'AB-Kevin/contractor-time', installerName: (version) => `KeepTime-Setup-${version}.exe` });
+const keeptime = selfUpdates({ repo: 'AB-Kevin/KeepTime', installerName: (version) => `KeepTime-Setup-${version}.exe` });
 
 test("an app's newer release is reported with its installer and digest", async () => {
   const fetch = fakeFetch(latestYml('1.2.0', { name: 'KeepTime-Setup-1.2.0.exe' }));
   const result = await keeptime.checkForUpdate('1.0.0', fetch);
-  assert.equal(keeptime.RELEASES_PAGE, 'https://github.com/AB-Kevin/contractor-time/releases');
-  assert.equal(fetch.url, 'https://github.com/AB-Kevin/contractor-time/releases/latest/download/latest.yml');
+  assert.equal(keeptime.RELEASES_PAGE, 'https://github.com/AB-Kevin/KeepTime/releases');
+  assert.equal(fetch.url, 'https://github.com/AB-Kevin/KeepTime/releases/latest/download/latest.yml');
   assert.deepEqual(result, {
     version: '1.2.0',
     newer: true,
     publishedAt: '2026-10-06T02:30:27.123Z',
-    pageUrl: 'https://github.com/AB-Kevin/contractor-time/releases/tag/v1.2.0',
+    pageUrl: 'https://github.com/AB-Kevin/KeepTime/releases/tag/v1.2.0',
     installer: {
       name: 'KeepTime-Setup-1.2.0.exe',
       size: 1234,
-      url: 'https://github.com/AB-Kevin/contractor-time/releases/download/v1.2.0/KeepTime-Setup-1.2.0.exe',
+      url: 'https://github.com/AB-Kevin/KeepTime/releases/download/v1.2.0/KeepTime-Setup-1.2.0.exe',
       sha512: DIGEST,
     },
   });

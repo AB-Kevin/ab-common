@@ -26,7 +26,7 @@ The HTTPS address keeps package.json readable; package-lock.json records the tag
 const { readJson, writeJson } = require('ab-common/jsonfile');
 const { selfUpdates } = require('ab-common/releases');
 const { RELEASES_PAGE, checkForUpdate, downloadInstaller } = selfUpdates({
-  repo: 'AB-Kevin/contractor-time',
+  repo: 'AB-Kevin/KeepTime',
   installerName: (version) => `KeepTime-Setup-${version}.exe`,
 });
 ```
