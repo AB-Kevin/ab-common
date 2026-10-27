@@ -1,0 +1,29 @@
+{
+  "name": "ab-common",
+  "version": "1.0.0",
+  "description": "The parts every Anabaptist Brotherhood app needs: OneDrive-safe JSON files, the AB Apps sign-in and shared settings, self-updates from GitHub releases, email and the Gravity Forms API.",
+  "author": "Anabaptist Brotherhood",
+  "license": "UNLICENSED",
+  "private": true,
+  "repository": "github:AB-Kevin/ab-common",
+  "engines": {
+    "node": ">=20"
+  },
+  "files": [
+    "src/"
+  ],
+  "exports": {
+    "./jsonfile": "./src/jsonfile.js",
+    "./abapps": "./src/abapps.js",
+    "./installs": "./src/installs.js",
+    "./releases": "./src/releases.js",
+    "./mailer": "./src/mailer.js",
+    "./gravityforms": "./src/gravityforms.js"
+  },
+  "scripts": {
+    "test": "node --test --test-force-exit \"test/*.test.js\""
+  },
+  "dependencies": {
+    "nodemailer": "10.0.13"
+  }
+}

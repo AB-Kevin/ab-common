@@ -1,0 +1,68 @@
+# The release workflow every app uses. Copy it to the app's
+# .github/workflows/release.yml and set the three values under `env`.
+#
+# Builds the Windows installer and publishes it as a GitHub release whenever a
+# version tag is pushed. Create one with `npm version patch` (or minor/major)
+# and push it with `git push --follow-tags`.
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write # create the release and upload the installer
+
+env:
+  APP_NAME: KeepTime # the release's title, before the version
+  INSTALLER: KeepTime-Setup # package.json build.nsis.artifactName, without "-${version}.${ext}"
+  BLOCKMAP: false # true for an app that updates itself with electron-updater
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Check the tag matches package.json
+        shell: bash
+        run: |
+          version="v$(node -p "require('./package.json').version")"
+          if [ "$version" != "$GITHUB_REF_NAME" ]; then
+            echo "::error::Tag $GITHUB_REF_NAME does not match package.json version $version."
+            exit 1
+          fi
+
+      - run: npm ci
+
+      - run: npm test
+
+      - name: Build the installer
+        run: npm run dist
+
+      - name: Publish the release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # latest.yml lists the installer's size and SHA-512 digest. The app's
+          # update check and AB Apps both read it from the latest release. The
+          # blockmap lets electron-updater download only what changed.
+          installer="dist/$INSTALLER-${GITHUB_REF_NAME#v}.exe"
+          files=("$installer" dist/latest.yml)
+          if [ "$BLOCKMAP" = true ]; then files+=("$installer.blockmap"); fi
+          # Re-running this job replaces the files on the existing release.
+          if gh release view "$GITHUB_REF_NAME" > /dev/null 2>&1; then
+            gh release upload "$GITHUB_REF_NAME" "${files[@]}" --clobber
+          else
+            # Published only once all the files are attached, so the latest
+            # release never lacks latest.yml.
+            gh release create "$GITHUB_REF_NAME" "${files[@]}" --draft --title "$APP_NAME $GITHUB_REF_NAME" --generate-notes
+            gh release edit "$GITHUB_REF_NAME" --draft=false --latest
+          fi
