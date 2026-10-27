@@ -17,8 +17,10 @@ None of it uses Electron, so it's tested with plain Node. Anything that goes onl
 ## Using it in an app
 
 ```
-npm install github:AB-Kevin/ab-common#v1.0.0
+npm install git+https://github.com/AB-Kevin/ab-common.git#v1.0.0
 ```
+
+The HTTPS address keeps package.json readable; package-lock.json records the tag's commit. npm downloads a public GitHub repository over HTTPS either way, so the release builds on GitHub need no key or token.
 
 ```js
 const { readJson, writeJson } = require('ab-common/jsonfile');
