@@ -21,9 +21,10 @@
     "./gravityforms": "./src/gravityforms.js"
   },
   "scripts": {
-    "test": "node --test --test-force-exit \"test/*.test.js\""
+    "test": "node --test --test-force-exit \"test/*.test.js\"",
+    "preversion": "npm test"
   },
   "dependencies": {
-    "nodemailer": "10.0.13"
+    "nodemailer": "10.2.1"
   }
 }
