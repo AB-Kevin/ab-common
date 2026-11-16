@@ -11,6 +11,7 @@ The parts every Anabaptist Brotherhood app needs, kept in one place instead of c
 | `ab-common/mailer` | Sending email over SMTP, without signing in when there's no user name, as AB Apps' mail server needs. |
 | `ab-common/appfolder` | Each app's data in its own subfolder of the AB Apps folder: which folder to use (`chooseFolder`), and moving data there once (`moveToAbApps`), leaving a note that sends other computers along. |
 | `ab-common/gravityforms` | Reading forms and entries from the website's Gravity Forms API with a read-only key. |
+| `ab-common/members` | [MemberManager](https://github.com/AB-Kevin/MemberManager)'s member list, which FormTracker and SendNewsletters read instead of keeping their own: finding it in the AB Apps folder (`memberListFolder`), reading it safely while OneDrive syncs (`readMemberList`), noticing a new save (`watchMemberList`), its members with their fields by name (`members`), and where a deleted or merged record went (`currentId`). |
 | `templates/release.yml` | The release workflow: copy it to an app's `.github/workflows/` and set its three values. |
 
 None of it uses Electron, so it's tested with plain Node. Anything that goes online takes a `fetch`; the apps pass Electron's `net.fetch`, which uses Windows' proxy settings.
@@ -50,6 +51,7 @@ A tag is never moved once pushed: an app's package-lock.json records the commit 
 | AB Apps | jsonfile, releases, installs, mailer, gravityforms |
 | KeepTime | jsonfile, abapps, releases, installs, mailer, appfolder |
 | Duplicate Checker | jsonfile, abapps, releases, appfolder |
-| FormTracker, SendNewsletters, ApplicationManager | appfolder |
+| FormTracker, SendNewsletters | appfolder, members |
+| ApplicationManager | appfolder |
 
 BillManager, ApplicationManager, FormTracker and SendNewsletters otherwise still have their own copies. They update through electron-updater rather than `releases`, so they move over separately.
