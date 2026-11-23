@@ -53,5 +53,6 @@ A tag is never moved once pushed: an app's package-lock.json records the commit 
 | Duplicate Checker | jsonfile, abapps, releases, appfolder |
 | FormTracker, SendNewsletters | appfolder, members |
 | ApplicationManager | appfolder |
+| AlmsManager | jsonfile, abapps, releases, appfolder, members |
 
 BillManager, ApplicationManager, FormTracker and SendNewsletters otherwise still have their own copies. They update through electron-updater rather than `releases`, so they move over separately.
